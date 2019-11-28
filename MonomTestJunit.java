@@ -34,6 +34,7 @@ public class MonomTestJunit {
 		if(m.get_power() != 1) 
 			fail("uncorrect implemented");
 	}
+	
 	@Test
 	public void testGetcoef()
 	{
@@ -110,6 +111,7 @@ public class MonomTestJunit {
 		else if(m.get_power() != ans.get_power()) 
 			fail("the String constructor is not working ,check the action at the function which add between the powers");   
 	}
+	
 	@Test
 	public void testDerivative() {
 		Monom m=new Monom (2,3);
@@ -122,6 +124,7 @@ public class MonomTestJunit {
 		if(m1.get_power() != m2.get_power())
 			fail("the Derivative function is not working ,the power value of actual_Monom isn't the same as excepted_power");
 	}
+
 	@Test
 	public void testIs_zero() {
 		Monom m = new Monom(0,2);
@@ -133,6 +136,7 @@ public class MonomTestJunit {
 		assertEquals(false, ans);
 		if(ans==true) fail("The Is_Zero function is not working well, coefficient is not 0") ; 
 	}
+	
 	@Test
 	public void testToString ()
 	{

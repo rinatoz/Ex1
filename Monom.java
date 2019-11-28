@@ -53,13 +53,13 @@ public class Monom implements function
 		int k=0;
 		String doub="";
 		double d=0;
-		if (s=="x")           //מקרה קצה
+		if (s=="x")          
 		{
 			this._coefficient=1;
 			this._power=1;
 		}
 		else
-		if (s=="-x")           //מקרה קצה
+		if (s=="-x")          
 		{
 			this._coefficient=-1;
 			this._power=1;
@@ -72,12 +72,12 @@ public class Monom implements function
 			}
 		    else
 		    {
-		while (k<s.length()&&s.charAt(k)!='x') // שמירה במחרוזת את המקדם של X
+		while (k<s.length()&&s.charAt(k)!='x') 
 		{
 		  doub=doub+s.charAt(k);
 		  k++;
 		}
-        if (isDigit(doub)==false)    //בדיקה אם המחרוזת היא מספר תקין
+        if (isDigit(doub)==false)   
         {
         	throw new RuntimeException ("uncorrect monom");
         }
@@ -96,15 +96,15 @@ public class Monom implements function
         }
 		this._coefficient=d;
 		 }
-		if (k==s.length()) //אם המחרוזת הסתיימה זה אומר שהמונום הוא מספר שלם איננו תלוי באיקס
+		if (k==s.length()) 
 		{
 			this._power=0;
 		}
-		else if (k==s.length()-1)   //אם המחרוזת נעצרה לפני שעברה על כל התווים בתוכה משמע שהתנאי עצירה שלה הוא איקס והוא האיבר האחרון במחרוזת לכן חזקתו היא 1
+		else if (k==s.length()-1)  
 		{
 			this._power=1;
 		}
-		else if (s.charAt(k+1)!='^'||(s.charAt(k+1)=='^'&&k+1==s.length()-1)) //אם למחרוזת המשך נבדוק כי ההמשך הוא חזקה של האיקס בצורה תקינה
+		else if (s.charAt(k+1)!='^'||(s.charAt(k+1)=='^'&&k+1==s.length()-1)) 
 		{
 			 throw new RuntimeException ("uncorrect monom");
 		}

@@ -60,6 +60,7 @@ public class Polynom implements Polynom_able{
 		}
 		mon=new Monom(st);
 		this._pol.add(mon);
+		polycorrect(this);
 		Polysort();	
 	}
 	
@@ -257,24 +258,22 @@ public class Polynom implements Polynom_able{
 	@Override
 	public double root(double x0, double x1, double eps)
 	{
-		double  x;
-		if (f(x0)<0&&f(x1)>0)
-		{
-		   for (double i=x0;i<=x1;i+=eps)
-		     {
-
-				x=(i+x1)/2;
-				if (Math.round(f(x))==0)
-					return x;
-		     }
-
+		double t=(x0+x1)/2;
+		if(f(x0)*f(x1)>0)	{
+			throw new RuntimeException("The function root must have one positive value and one negative value.");
 		}
-		else
-		{
-			throw new RuntimeException ("this condition f(x0)<0&&f(x1)>0 not exist");
+		while(Math.abs(f(t))>eps) {
+			if(f(t)>0) {
+				if(f(x0)>0)x0=t;
+				else x1=t;
+			}
+			else {
+				if(f(x1)<0)x1=t;
+				else x0=t;
+			}
+			t=(x0+x1)/2;
 		}
-			
-		return 0;
+		return t;
 	}
 
 	@Override
@@ -297,6 +296,10 @@ public class Polynom implements Polynom_able{
 		p._pol=this._pol;
 		int power=0;
 		double coef;
+		if (this._pol.size()==1&&this._pol.get(0).get_power()==0)
+		{
+			p=new Polynom("0");return p;
+		}
 		for (int i=0;i<this._pol.size();i++)
 		{
 		  if (this._pol.get(i).get_power()!=0)
@@ -309,7 +312,7 @@ public class Polynom implements Polynom_able{
           {
 	      p._pol.set(i,new Monom(coef,power));
           }
-          else
+          else if (i!=0)
           {
         	  p._pol.remove(i);
           }
@@ -318,8 +321,7 @@ public class Polynom implements Polynom_able{
 		
 		return p;
 	}
-	
-	
+		
 	@Override
     public double area(double x0, double x1, double eps)
 	{
