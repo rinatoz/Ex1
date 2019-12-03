@@ -1,9 +1,5 @@
-package myMath;
-
-
+package Ex1;
 import java.util.Comparator;
-
-//import exe0.Monom;
 
 public class Monom implements function
 {
@@ -89,6 +85,15 @@ public class Monom implements function
         	}
         	 d=Double.parseDouble(doub.substring(1));
         	 d=-1*d;
+        }
+        else if (doub.charAt(0)=='+')
+        {
+        	if (doub.substring(1).isEmpty())
+        	{
+        		doub="1";
+        	}
+        	 d=Double.parseDouble(doub.substring(1));
+        	 d=1*d;
         }
         else
         {
@@ -187,7 +192,7 @@ public class Monom implements function
 	private static boolean isDigit (String st)     //check if String is a correct Monom.
 	{
 		int counter=0;
-		if (st.charAt(0)=='-')
+		if (st.charAt(0)=='-'||st.charAt(0)=='+')
 		{
 			counter++;
 		}
@@ -226,7 +231,7 @@ public class Monom implements function
 	{
 		if(Math.round(this._coefficient)==0&&Math.round(m._coefficient)==0)
 			return true;
-		if (this._coefficient!=m._coefficient||this._power!=m._power)
+		if (Math.round(this._coefficient)!=Math.round(m._coefficient)|this._power!=m._power)
 			return false;
 		return true;
 	}
@@ -237,5 +242,22 @@ public class Monom implements function
 	
 	private int _power;
 	
+	
+	public function initFromString(String s)
+	{
+		Monom m=new Monom (s);
+		function f=new Monom(m);
+		return f;
+	}
+	
+	public function copy()
+	{
+		function f=this.copy();
+		return f;
+	}
+	public boolean equals(Object obj)
+	{
+		return this.equals(obj);
+	}
 	
 }

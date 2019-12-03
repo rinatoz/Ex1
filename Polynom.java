@@ -1,10 +1,14 @@
-package myMath;
-
-
+package Ex1;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.function.Predicate;
+
+import myMath.Polynom;
+
+
+
+
 
 //import exe0.Polynom;
 
@@ -27,9 +31,13 @@ public class Polynom implements Polynom_able{
 		this._pol=new ArrayList<Monom>();
 		this._pol.add(m);
 	}
-
+	private Polynom (Polynom p)
+	{
+		this._pol=p._pol;
+	}
 	public Polynom(String s)
 	{
+		s = s.replaceAll("\\s+","");
 		Monom mon=new Monom("0");
 		String st="";
 		this._pol=new ArrayList<Monom>();
@@ -39,6 +47,10 @@ public class Polynom implements Polynom_able{
 			if(s.charAt(i)=='-'&&i==0)
 			{
 				st="-";
+			}
+			else if(s.charAt(i)=='+'&&i==0)
+			{
+				st="+";
 			}
 			else
 			if (s.charAt(i)!='+'&&s.charAt(i)!='-')
@@ -61,7 +73,7 @@ public class Polynom implements Polynom_able{
 		mon=new Monom(st);
 		this._pol.add(mon);
 		polycorrect(this);
-		Polysort();	
+		Polysort();
 	}
 	
 	@Override
@@ -133,20 +145,26 @@ public class Polynom implements Polynom_able{
 
 	@Override
 	public void substract(Polynom_able p1) {
-		Iterator<Monom> iterator = p1.iteretor();
-		int power;
-		double coef;
-		Monom m;
-		while (iterator.hasNext())
-		{
+        if (this.equals(p1)) {
+            _pol.clear();
+        } 
+        else {
 
-			m=iterator.next();
-			power=m.get_power();
-			coef=m.get_coefficient();
-            this.add(new Monom(-coef,power));	
-		}
-		polycorrect(this);
-		Polysort();	
+            Iterator<Monom> it = p1.iteretor();
+
+            while (it.hasNext()) {
+
+                Monom monom = it.next();
+
+                monom =new Monom(-1*monom.get_coefficient(),monom.get_power());
+
+                _pol.add(monom);
+
+            }
+
+
+        }
+        polycorrect(this);
 	}
 
 	@Override
@@ -214,28 +232,6 @@ public class Polynom implements Polynom_able{
 		Polysort();	
 }
 		
-	@Override
-	public boolean equals(Polynom_able p1)
-	{
-		Iterator<Monom> iterator=p1.iteretor();
-		int i=0;
-		if (iterator.hasNext()==false||this._pol.isEmpty())
-			return false;
-	      while (iterator.hasNext())
-	      {
-	    	  if(i==this._pol.size())
-	    		  return false;
-				if (this._pol.get(i).equals(iterator.next())==false)
-				{
-					return false;
-				}
-				i++;
-		   }
-	      if (this._pol.size()!=i)
-	    	  return false;
-			
-	      return true;
-	}
 
 	@Override
 	public boolean isZero() 
@@ -325,15 +321,17 @@ public class Polynom implements Polynom_able{
 	@Override
     public double area(double x0, double x1, double eps)
 	{
-        double sum=0;   
-        double h,x=x0;;
-        for (double i=x0;i<=x1;i+=eps)
-        {
-        	h=f(i);
-        	sum=sum+h*eps;     	
-        }
-        
-        return sum;
+		double n = Math.abs((x1 - x0) / eps);
+		double sum = 0;
+		double x = x0;
+		for (int i = 0; i < n; i++) {
+			x = x + eps;
+			if (f(x) > 0) {
+				sum = sum + f(x);
+			}
+		}
+
+		return sum * eps;
 	}
 
 	@Override
@@ -360,8 +358,9 @@ public class Polynom implements Polynom_able{
 		Polysort();	
 			
 	}
+
 	
-	public String tostring ()
+	public String toString ()
 	{
 		String a="";
 		for (int i=0;i<this._pol.size();i++)
@@ -380,4 +379,39 @@ public class Polynom implements Polynom_able{
 	{
 		Collections.sort(this._pol, new Monom_Comperator()); 
 	}
+	
+	public function initFromString(String s)
+	{
+		function f;
+        Polynom p=new Polynom (s);
+		f=new Polynom(p);
+        return f;	
+	}
+	
+	
+	public boolean equals(Polynom_able p1)
+	{
+		Iterator<Monom> iterator=p1.iteretor();
+		
+		int i=0;
+		if (iterator.hasNext()==false||this._pol.isEmpty())
+			return false;
+	      while (iterator.hasNext())
+	      {
+	    	  if(i==this._pol.size())
+	    		  return false;
+				if (this._pol.get(i).equals(iterator.next())==false)
+				{
+					return false;
+				}
+				i++;
+		   }
+	      if (this._pol.size()!=i)
+	    	  return false;
+			
+	      return true;
+	}
+
+	
+
 }

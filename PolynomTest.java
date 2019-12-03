@@ -1,6 +1,4 @@
-package myMath;
-
-
+package Ex1;
 public class PolynomTest {
 	public static void main(String[] args) {
 		test1();
@@ -16,7 +14,7 @@ public class PolynomTest {
 		double aa = p1.area(0, 1,0.0001);
 		System.out.println(aa);
 		p1.substract(p1);
-		System.out.println(p1.tostring());
+		System.out.println(p1.toString());
 		
 	}
 	public static void test2() {
@@ -31,12 +29,12 @@ public class PolynomTest {
 			Monom m = new Monom(monoms2[i]);
 			p2.add(m);
 		}
-		System.out.println("p1: "+p1.tostring());
-		System.out.println("p2: "+p2.tostring());
+		System.out.println("p1: "+p1.toString());
+		System.out.println("p2: "+p2.toString());
 		p1.add(p2);
-		System.out.println("p1+p2: "+p1.tostring());
+		System.out.println("p1+p2: "+p1.toString());
 		p1.multiply(p2);
-		System.out.println("(p1+p2)*p2: "+p1.tostring());
+		System.out.println("(p1+p2)*p2: "+p1.toString());
 		String s1 = p1.toString();
 	//	Polynom_able pp1 = Polynom.parse(s1);
 		//System.out.println("from string: "+pp1);

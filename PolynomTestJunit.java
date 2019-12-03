@@ -1,5 +1,4 @@
-package myMath;
-
+package Ex1;
 import static org.junit.Assert.*;
 
 import java.util.Iterator;
@@ -52,25 +51,25 @@ public class PolynomTestJunit {
 	Polynom p2 = new Polynom("2x^2+3x");
 	Polynom expected = new Polynom("3x^3+6x^2+3x");
 	p1.add(p2);
-	assertEquals(p1.tostring(), expected.tostring());
+	assertEquals(p1.toString(), expected.toString());
     //2:
 	 p1 = new Polynom("-7x^2+x-1");
 	 p2 = new Polynom("6x^2");
 	 expected = new Polynom("-x^2+x-1");
 	 p1.add(p2);
-	 assertEquals(p1.tostring(), expected.tostring());
+	 assertEquals(p1.toString(), expected.toString());
 	 //3:
      p1 = new Polynom("-7x^2-5");
 	 p2 = new Polynom("0");
 	 expected = new Polynom("-7x^2-5");
 	 p1.add(p2);
-	 assertEquals(p1.tostring(), expected.tostring());
+	 assertEquals(p1.toString(), expected.toString());
 	 //4:
      p1 = new Polynom("-7x^2+5x");
 	 p2 = new Polynom("7x^2-3x+5");
 	 expected = new Polynom("2x+5");
 	 p1.add(p2);
-	 assertEquals(p1.tostring(), expected.tostring());
+	 assertEquals(p1.toString(), expected.toString());
 	
 }
  	
@@ -82,19 +81,19 @@ public class PolynomTestJunit {
 	Monom m = new Monom("2x^2");
 	Polynom expected = new Polynom("6x^2+5x");
 	p1.add(m);
-	assertEquals(p1.tostring(), expected.tostring());
+	assertEquals(p1.toString(), expected.toString());
 	//2:
 	p1 = new Polynom("4x^2-7x");
 	m = new Monom("5");
 	expected = new Polynom("4x^2-7x+5");
 	p1.add(m);
-	assertEquals(p1.tostring(), expected.tostring());
+	assertEquals(p1.toString(), expected.toString());
 	//3:
 	p1 = new Polynom("4x^2-7x");
 	m = new Monom("7x");
 	expected = new Polynom("4x^2");
 	p1.add(m);
-	assertEquals(p1.tostring(), expected.tostring());
+	assertEquals(p1.toString(), expected.toString());
 	
 }
   
@@ -124,25 +123,25 @@ public class PolynomTestJunit {
 	Polynom p2 = new Polynom("2x^2");
 	Polynom expected = new Polynom("2x^2");
 	p1.substract(p2);
-	assertEquals(p1.tostring(), expected.tostring());
+	assertEquals(p1.toString(), expected.toString());
    //2:
 	 p1 = new Polynom("-7x^2");
 	 p2 = new Polynom("5x^2");
 	 expected = new Polynom("-12x^2");
 	 p1.substract(p2);
-	 assertEquals(p1.tostring(), expected.tostring());
+	 assertEquals(p1.toString(), expected.toString());
 	 //3:
     p1 = new Polynom("-7x^2");
 	 p2 = new Polynom("0");
 	 expected = new Polynom("-7x^2");
 	 p1.substract(p2);
-	 assertEquals(p1.tostring(), expected.tostring());
+	 assertEquals(p1.toString(), expected.toString());
 	 //4:
     p1 = new Polynom("-7x^2+5x");
 	 p2 = new Polynom("-7x^2-3x+5");
 	 expected = new Polynom("8x-5");
 	 p1.substract(p2);
-	 assertEquals(p1.tostring(), expected.tostring());
+	 assertEquals(p1.toString(), expected.toString());
 	
 }	
  
@@ -154,37 +153,37 @@ public class PolynomTestJunit {
  		Polynom p2 = new Polynom("1+x");
  		Polynom expected = new Polynom("x^2+3x+2");
  		p1.multiply(p2);
- 		assertEquals(p1.tostring(), expected.tostring());
+ 		assertEquals(p1.toString(), expected.toString());
  	    //2:
  		 p1 = new Polynom("x^2+1");
  		 p2 = new Polynom("x");
  		 expected = new Polynom("x^3+x");
  		 p1.multiply(p2);
- 		 assertEquals(p1.tostring(), expected.tostring());
+ 		 assertEquals(p1.toString(), expected.toString());
  		 //3:
  	     p1 = new Polynom("x^2+x+1");
  		 p2 = new Polynom("x-3");
  		 expected = new Polynom("x^3-2x^2-2x-3");
  		 p1.multiply(p2);
- 		 assertEquals(p1.tostring(), expected.tostring());
+ 		 assertEquals(p1.toString(), expected.toString());
  		 //4:
  	     p1 = new Polynom("-1x");
  		 p2 = new Polynom("-x");
  		 expected = new Polynom("x^2");
  		 p1.multiply(p2);
- 		 assertEquals(p1.tostring(), expected.tostring());
+ 		 assertEquals(p1.toString(), expected.toString());
  		 //5:
  		p1 = new Polynom("x+3");
 		Monom m1 = new Monom("-x");
 		 expected = new Polynom("-x^2-3x");
 		 p1.multiply(p2);
-		 assertEquals(p1.tostring(), expected.tostring());
+		 assertEquals(p1.toString(), expected.toString());
 		 //6:
 		 p1 = new Polynom("x^2+5x-2");
 		 m1 = new Monom("-x");
 	    expected = new Polynom("-x^3-5x^2+2x");
 		 p1.multiply(p2);
-		 assertEquals(p1.tostring(), expected.tostring());
+		 assertEquals(p1.toString(), expected.toString());
  		
  	}
 
@@ -297,10 +296,10 @@ public class PolynomTestJunit {
    }
    
    @Test
-   public void TestToString ()
+   public void TesttoString ()
    {
 	   Polynom Expected=new Polynom("x^2-5x+0.5");
-	   Polynom Actual=new Polynom(Expected.tostring());
+	   Polynom Actual=new Polynom(Expected.toString());
 	   for (int i=0;i<Expected._pol.size();i++)
 	   {
 		   assertEquals( Expected._pol.get(i).get_power(),Actual._pol.get(i).get_power());
@@ -340,15 +339,15 @@ public class PolynomTestJunit {
 	public void validInputsTest() {
 		//#1:
 		Polynom p1 = new Polynom("18+5");
-		assertEquals(p1.tostring(),"23.0");
+		assertEquals(p1.toString(),"23.0");
 
 		//#2:
 		p1 = new Polynom("-1x^1");
-		assertEquals(p1.tostring(),"-1.0x");
+		assertEquals(p1.toString(),"-1.0x");
 
 		//#3:
 		p1 = new Polynom("5x^2-3x");
-		assertEquals(p1.tostring(), "5.0x^2-3.0x");
+		assertEquals(p1.toString(), "5.0x^2-3.0x");
 
 	}
    
