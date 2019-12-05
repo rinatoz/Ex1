@@ -1,12 +1,6 @@
 package Ex1Testing;
 import static org.junit.Assert.*;
-
 import java.util.Iterator;
-
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import Ex1.Monom;
@@ -15,25 +9,8 @@ import Ex1.Polynom_able;
 
 public class PolynomTestJunit {
 
-	double eps=0.00001;
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
+	double eps=0.0001;
 
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
-
-	@Before
-	public void setUp() throws Exception {
-	}
-
-	@After
-	public void tearDown() throws Exception {
-	}
-
-
-	
     @Test	
     public void PolynomZeroTest() {
 		
@@ -74,7 +51,18 @@ public class PolynomTestJunit {
 	 expected = new Polynom("2x+5");
 	 p1.add(p2);
 	 assertEquals(p1.toString(), expected.toString());
-	
+	//5:
+	 p1 = new Polynom("0");
+	 p2 = new Polynom("0");
+	 expected = new Polynom("0");
+	 p1.add(p2);
+	 assertEquals(p1.toString(), expected.toString());
+	//6:
+	 p1 = new Polynom("5.5");
+	 p2 = new Polynom("0");
+	 expected = new Polynom("5.5");
+	 p1.add(p2);
+	 assertEquals(p1.toString(), expected.toString());
 }
  	
 	@Test
@@ -96,6 +84,12 @@ public class PolynomTestJunit {
 	p1 = new Polynom("4x^2-7x");
 	m = new Monom("7x");
 	expected = new Polynom("4x^2");
+	p1.add(m);
+	assertEquals(p1.toString(), expected.toString());
+	//4:
+	p1 = new Polynom("4x^2-7x");
+	m = new Monom("0");
+	expected = new Polynom("4x^2-7x");
 	p1.add(m);
 	assertEquals(p1.toString(), expected.toString());
 	
@@ -146,7 +140,12 @@ public class PolynomTestJunit {
 	 expected = new Polynom("8x-5");
 	 p1.substract(p2);
 	 assertEquals(p1.toString(), expected.toString());
-	
+	//5:
+	    p1 = new Polynom("-7x^2+5x");
+		p2 = new Polynom("-7x^2+5x");
+		expected = new Polynom("0");
+		p1.substract(p2);
+		assertEquals(p1.toString(), expected.toString());
 }	
  
 	@Test
@@ -183,7 +182,14 @@ public class PolynomTestJunit {
 		 assertEquals(p1.toString(), expected.toString());
 		 //6:
 		 p1 = new Polynom("x^2+5x-2");
-	    expected = new Polynom("-x^3-5x^2+2x");
+		 p2 = new Polynom("0");
+	    expected = new Polynom("0");
+		 p1.multiply(p2);
+		 assertEquals(p1.toString(), expected.toString());
+		 //7:
+		 p1 = new Polynom("x-2");
+		 p2 = new Polynom("x+2");
+	    expected = new Polynom("x^2-4");
 		 p1.multiply(p2);
 		 assertEquals(p1.toString(), expected.toString());
  		
@@ -212,13 +218,23 @@ public class PolynomTestJunit {
     	p2=new Polynom("x^3-x^2");
     	ans=p1.equals(p2);
     	assertTrue(ans);
+    	//5:
+    	p1=new Polynom("-x^2+x^3-0");
+    	p1=new Polynom("-x^2+4x^3-3x^3+0");
+    	ans=p1.equals(p2);
+    	assertTrue(ans);
     }
 
    @Test
    public void isZerotest()
     {
+	   //1:
      Polynom p1=new Polynom("0");
      boolean ans=p1.isZero();
+     assertTrue(ans);
+     //2:
+      p1=new Polynom("3x^2-3x^2");
+      ans=p1.isZero();
      assertTrue(ans);
     }
  
@@ -361,12 +377,14 @@ public class PolynomTestJunit {
 		    Polynom	p1 = new Polynom("H+56");
 			p1 = new Polynom("2x^-4");
 			p1 = new Polynom("@%");
-			p1 = new Polynom("2x^0.4");
+			p1 = new Polynom("2x^0.4-13");
+			p1 = new Polynom("4x^3-3x^");
 			p1.copy();
 			}
 			catch(RuntimeException e)
 			{
-				System.out.println("the message of error was shown");
+				System.out.println("***test of string constructor***");
+				System.out.println("uncorrect string into the constructor");
 			
 	        }
        }

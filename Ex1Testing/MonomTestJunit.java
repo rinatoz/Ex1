@@ -1,39 +1,20 @@
 package Ex1Testing;
 import static org.junit.Assert.*;
-
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import Ex1.Monom;
 
 public class MonomTestJunit {
-     double eps =0.00001;
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
-
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
-
-	@Before
-	public void setUp() throws Exception {
-	}
-
-	@After
-	public void tearDown() throws Exception {
-	}
-
+     double eps =0.0001;
 	@Test
 	public void testGetpower ()
 	{
 		Monom m=new Monom (1,1);
 		assertEquals(1,m.get_power());
-		if(m.get_power() != 1) 
-			fail("uncorrect implemented");
+
+		 m=new Monom (0,0);
+		 assertEquals(0,m.get_power());
+	 
 	}
 	
 	@Test
@@ -41,34 +22,70 @@ public class MonomTestJunit {
 	{
 		Monom m=new Monom (1,1);
 		assertEquals(1,m.get_coefficient(),eps);
-		if(m.get_coefficient() != 1) 
-			fail("uncorrect implemented");
 	}
 
 	@Test
-	public void testStringMonom()
+	public void testStringMonomUNCORRECT()
 	{
-		Monom m= new Monom ("3x^2");
-		Monom m1= new Monom (3,2);
-		assertEquals(m.get_coefficient(),m1.get_coefficient(),eps);
-		assertEquals(m.get_power(),m1.get_power()); 	
-		if(m.get_coefficient() !=  m1.get_coefficient())
-			fail("the String constructor is not working ,the coefficient values arent equal");
-		else if(m.get_power() != m1.get_power()) 
-			fail("the String constructor is not working ,the power values arent equal");
+	   try
+	   {
+		Monom m=new Monom ("EX1");
+		m=new Monom ("2x^");
+		m=new Monom ("x^0.4");
+		m=new Monom ("$%$%#");
+		m=new Monom (".");
+		m=new Monom ("5x5");
+	   }
+	   catch (Exception E)
+	   {
+		System.out.println("***test string constructor***");
+		System.out.println("catch the String which uncorrect at the constructor");
+	   }
+	   
 	}
 	
 	@Test
-	public void testMonomMonom()
+public void testStringMonomCORRECT()
+	{
+		Monom m=new Monom ("0x^0");
+		Monom m1=new Monom (0,0);
+		assertEquals(m1.get_coefficient(),m.get_coefficient(),eps);
+		assertEquals(m1.get_power(),m.get_power(),eps);
+		m=new Monom ("2.5x");
+		m1=new Monom (2.5,1);
+		assertEquals(m1.get_coefficient(),m.get_coefficient(),eps);
+		assertEquals(m1.get_power(),m.get_power(),eps);
+		m=new Monom ("1x^1");
+		 m1=new Monom (1,1);
+		assertEquals(m1.get_coefficient(),m.get_coefficient(),eps);
+		assertEquals(m1.get_power(),m.get_power(),eps);
+		m=new Monom ("-1x^0");
+		 m1=new Monom (-1,0);
+		assertEquals(m1.get_coefficient(),m.get_coefficient(),eps);
+		assertEquals(m1.get_power(),m.get_power(),eps);
+		m=new Monom ("5x^0");
+		 m1=new Monom (5,0);
+		assertEquals(m1.get_coefficient(),m.get_coefficient(),eps);
+		assertEquals(m1.get_power(),m.get_power(),eps);
+	}
+	
+	@Test	
+public void testMonomMonom()
 	{
 		Monom m= new Monom (3,2);
 		Monom m1= new Monom (m);
 		assertEquals(m.get_coefficient(),m1.get_coefficient(),eps);
 		assertEquals(m.get_power(),m1.get_power()); 	
-		if(m.get_coefficient() !=  m1.get_coefficient())
-			fail("the copy constructor is not working , the coefficient values arent the same");
-		else if(m.get_power() != m1.get_power()) 
-			fail("the copy constructor is not working , the power values arent the same");
+
+	    m= new Monom (0,0);
+	    m1= new Monom (m);
+		assertEquals(m.get_coefficient(),m1.get_coefficient(),eps);
+		assertEquals(m.get_power(),m1.get_power()); 
+		
+		  m= new Monom ("-x");
+		  m1= new Monom (m);
+	      assertEquals(m.get_coefficient(),m1.get_coefficient(),eps);
+		  assertEquals(m.get_power(),m1.get_power());
 	}
 
 	@Test
@@ -78,8 +95,18 @@ public class MonomTestJunit {
 		double x=1;
 		double ans=3;
 		double ans1=m.f(x);
-		if (ans!=ans1)
-			fail("this function uncorrect-check the action that put some x at the Monom");
+		assertEquals(ans,ans1,eps);	
+		
+		 m= new Monom (5,0);
+		 x=1;
+		 ans=5;
+		 ans1=m.f(x);
+		assertEquals(ans,ans1,eps);	
+		
+		 m= new Monom (3,3);
+		 x=0;
+		 ans=0;
+		 ans1=m.f(x);
 		assertEquals(ans,ans1,eps);	
 	}
 	
@@ -92,10 +119,25 @@ public class MonomTestJunit {
         m.add(m1);
         assertEquals( m.get_power(),ans.get_power());
         assertEquals(ans.get_coefficient(),m.get_coefficient(),eps);
-		if(m.get_coefficient() !=  ans.get_coefficient())
-			fail("the coefficient values arent equal, check the action at the function which add between the coeffiecnts");
-		else if(m.get_power() != ans.get_power()) 
-			fail("the String constructor is not working ,check if the function keep the power without changing");
+        
+        m= new Monom (6,0);
+		m1= new Monom (4,0);
+	    ans =new Monom (10,0);
+        m.add(m1);
+        assertEquals( m.get_power(),ans.get_power());
+        assertEquals(ans.get_coefficient(),m.get_coefficient(),eps);
+        
+        try
+        {
+        m= new Monom (6,5);
+		m1= new Monom (4,2);
+        m.add(m1);
+        }
+        catch (Exception E)
+        {
+        System.out.println("***test add-monom***");
+        System.out.println("impossible to add beteen 2 monoms with diffrent power, and get monom");	
+        }
 	}
 	
 	@Test
@@ -107,10 +149,20 @@ public class MonomTestJunit {
         m.multipy(m1);
         assertEquals( m.get_power(),ans.get_power());
         assertEquals(ans.get_coefficient(),m.get_coefficient(),eps);
-		if(m.get_coefficient() !=  ans.get_coefficient())
-			fail("the coefficient values arent equal, check the action at the function which multipy between the coeffiecnts");
-		else if(m.get_power() != ans.get_power()) 
-			fail("the String constructor is not working ,check the action at the function which add between the powers");   
+        
+    	 m= new Monom (1,5);
+		 m1= new Monom (0,2);
+		 ans =new Monom (0,0);
+        m.multipy(m1);
+        assertEquals( m.get_power(),ans.get_power());
+        assertEquals(ans.get_coefficient(),m.get_coefficient(),eps);
+        
+        m= new Monom (1,4);
+		m1= new Monom (1,0);
+		ans =new Monom (1,4);
+       m.multipy(m1);
+       assertEquals( m.get_power(),ans.get_power());
+       assertEquals(ans.get_coefficient(),m.get_coefficient(),eps);
 	}
 	
 	@Test
@@ -119,11 +171,25 @@ public class MonomTestJunit {
 		Monom m1=new Monom (6,2);
 		Monom m2=m.derivative();
         assertEquals( m1.get_power(),m2.get_power());
-         assertEquals(m1.get_coefficient(),m2.get_coefficient(),eps);
-		if(m1.get_coefficient() != m2.get_coefficient())
-			fail("the Derivative function is not working ,the coefficient value of actual_Monom isn't the same as excepted_coefficient ");
-		if(m1.get_power() != m2.get_power())
-			fail("the Derivative function is not working ,the power value of actual_Monom isn't the same as excepted_power");
+        assertEquals(m1.get_coefficient(),m2.get_coefficient(),eps);
+        
+    	m=new Monom (1,0);
+	    m1=new Monom (0,0);
+		m2=m.derivative();
+        assertEquals( m1.get_power(),m2.get_power());
+        assertEquals(m1.get_coefficient(),m2.get_coefficient(),eps);
+        
+    	m=new Monom (2.5,2);
+	    m1=new Monom (5,1);
+		m2=m.derivative();
+        assertEquals( m1.get_power(),m2.get_power());
+        assertEquals(m1.get_coefficient(),m2.get_coefficient(),eps);
+        
+    	m=new Monom (3.333,1);
+	    m1=new Monom (3.333,0);
+		m2=m.derivative();
+        assertEquals( m1.get_power(),m2.get_power());
+        assertEquals(m1.get_coefficient(),m2.get_coefficient(),eps);
 	}
 
 	@Test
@@ -131,11 +197,15 @@ public class MonomTestJunit {
 		Monom m = new Monom(0,2);
 		boolean ans = m.isZero();
 		assertEquals(true, ans);
-		if(!ans) fail("The Is_Zero function is not working well, coefficient is not 0") ; 
+
 		m=new Monom (1,1);
 		ans = m.isZero();
 		assertEquals(false, ans);
-		if(ans==true) fail("The Is_Zero function is not working well, coefficient is not 0") ; 
+
+		m=new Monom (5,0);
+		m=m.derivative();
+		ans = m.isZero();
+		assertEquals(true, ans);
 	}
 	
 	@Test
@@ -143,6 +213,16 @@ public class MonomTestJunit {
 	{
 		Monom m=new Monom (-1.5,3);
 		Monom m1=new Monom (m.toString());
+        assertEquals( m.get_power(),m1.get_power());
+        assertEquals(m.get_coefficient(),m1.get_coefficient(),eps);
+        
+        m=new Monom (1,0);
+		m1=new Monom (m.toString());
+        assertEquals( m.get_power(),m1.get_power());
+        assertEquals(m.get_coefficient(),m1.get_coefficient(),eps);
+        
+        m=new Monom (0,1);
+      	m1=new Monom (m.toString());
         assertEquals( m.get_power(),m1.get_power());
         assertEquals(m.get_coefficient(),m1.get_coefficient(),eps);
 	}

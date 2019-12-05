@@ -6,7 +6,7 @@ public class ComplexFunction implements complex_function {
 	private static final long serialVersionUID = 0;
 
 	function right;
-     function left;
+     public function left;
      Operation op;
      
      public ComplexFunction ()
@@ -26,25 +26,31 @@ public class ComplexFunction implements complex_function {
     	 case "max": this.op=Operation.Max; break;
     	 case "min": this.op=Operation.Min; break;
     	 case "comp": this.op=Operation.Comp;break;
+    	 case "none": this.op=Operation.None;break;
          default: throw new RuntimeException ("uncorrect Operation");
     	 }
     	 this.left=left;
     	 this.right=right;
+    		if (!(this.right.toString().equals("0.0"))&&this.op.toString().equals("None"))
+        		throw new RuntimeException ("complex function can't accept 2 functions with none operation");
      }
  	public ComplexFunction(function f) {
-		this.right = f;
-		this.left = new Polynom("0");
+		this.left = f;
+		this.right = new Polynom("0");
 		this.op = Operation.None;
 	}
      public ComplexFunction (Operation op,function left,function right)
      {
     	 this.op=op;
      	this.left=left;
-    	this.right=right;	
+    	this.right=right;
+    	if (!(this.right.toString().equals("0.0"))&&this.op.toString().equals("None"))
+    		throw new RuntimeException ("complex function can't accept 2 functions with none operation");
      }
      
      public ComplexFunction (String s)
      {
+    	 boolean flag=false;
     	try
     	{
     		if (s.substring(0,6).equals("f(x)= "))
@@ -96,6 +102,7 @@ public class ComplexFunction implements complex_function {
 		    {
 		    	this.op=Operation.None;
 		    	s=s.substring(4);
+		    	 flag=true;
 		    }
  	 	   else
  	 	   {
@@ -108,9 +115,11 @@ public class ComplexFunction implements complex_function {
 			throw new RuntimeException("uncorrect pattern,miss ','");
 			int i = retIndex(s);
 			if(spaces==1) 
-			{  
+			{  				
 				this.left = new Polynom(s.substring(0, i));
 				this.right = new Polynom(s.substring(i+1, s.length()));
+				if (flag==true&&!(this.right.toString().equals("0.0")))
+					throw new RuntimeException ("complex function can't accept 2 functions with none operation");
 			}
 			else
 			{
@@ -130,6 +139,9 @@ public class ComplexFunction implements complex_function {
 					this.right = new ComplexFunction(s.substring(i+1, s.length()));
 				}
 			}
+			
+			if ((!(this.right.toString().equals("0.0")))&&this.op.toString().equals("None"))
+				throw new RuntimeException ("complex function can't accept 2 functions with none operation");
 
      }
  
@@ -175,13 +187,8 @@ public class ComplexFunction implements complex_function {
 	 */
 	public void mul(function f1)
 	{
-		   if ((f1.toString().equals("0.0")))
-		   {
-			  this.left=new Monom("0");
-			  this.right=new Polynom ("0");
-			  this.op=Operation.None;
-		   }
-		   else if(!(f1.toString().equals("1.0")))
+
+		    if(!(f1.toString().equals("1.0"))) //the number "1" have no influence at multiply
 		   {
 		       if (this.left.toString().equals("0.0") && this.op.toString().equals("None")) 
 		       {
@@ -239,10 +246,21 @@ public class ComplexFunction implements complex_function {
 	 */
 	public void max(function f1)
 	{
-		ComplexFunction comp=new ComplexFunction (this.op,this.left,this.right);
-		this.left=comp;
-		this.right=f1;
-	    this.op=Operation.Max;
+		 if (this.left.toString().equals("0.0") && this.op.toString().equals("None")) 
+	       {
+	    	   this.left=f1;
+	       }
+	       else
+	       if (this.right.toString().equals("0.0") && this.op.toString().equals("None"))
+	    	   this.right=f1;
+	       else
+	       {
+	    	ComplexFunction comp=new ComplexFunction (this.op,this.left,this.right);
+	   		this.left=comp;
+	   		this.right=f1;
+	       }
+	    	   
+	  	    this.op=Operation.Max;
 	}
 	/** Computes the minimum over this complex_function and the f1 complex_function
 	 * 
@@ -250,10 +268,21 @@ public class ComplexFunction implements complex_function {
 	 */
 	public void min(function f1)
 	{
-		ComplexFunction comp=new ComplexFunction (this.op,this.left,this.right);
-		this.left=comp;
-		this.right=f1;
-	    this.op=Operation.Min;
+		 if (this.left.toString().equals("0.0") && this.op.toString().equals("None")) 
+	       {
+	    	   this.left=f1;
+	       }
+	       else
+	       if (this.right.toString().equals("0.0") && this.op.toString().equals("None"))
+	    	   this.right=f1;
+	       else
+	       {
+	    	ComplexFunction comp=new ComplexFunction (this.op,this.left,this.right);
+	   		this.left=comp;
+	   		this.right=f1;
+	       }
+	    	   
+	  	    this.op=Operation.Min;
 	}
 	/**
 	 * This method wrap the f1 complex_function with this function: this.f(f1(x))
@@ -264,10 +293,21 @@ public class ComplexFunction implements complex_function {
 		if (this.left==null)
 			throw new RuntimeException ("this function must be exist");
 		
-		ComplexFunction comp=new ComplexFunction (this.op,this.left,this.right);
-		this.left=comp;
-		this.right=f1;
-	    this.op=Operation.Comp;
+		 if (this.left.toString().equals("0.0") && this.op.toString().equals("None")) 
+	       {
+	    	   this.left=this.right;
+	    	   this.right=f1;
+	       }
+	       else if (this.right.toString().equals("0.0") && this.op.toString().equals("None"))
+	    	   this.right=f1;
+	       else
+	       {
+	    	ComplexFunction comp=new ComplexFunction (this.op,this.left,this.right);
+	   		this.left=comp;
+	   		this.right=f1;
+	       }
+	    	   
+	  	    this.op=Operation.Comp;
 	}
 	/** returns the left side of the complex function - this side should always exists (should NOT be null).
 	 * @return a function representing the left side of this complex funcation
@@ -276,7 +316,7 @@ public class ComplexFunction implements complex_function {
 	{
 		if (this.left==null)
 			throw new RuntimeException ("this Complex function have a function which has null pointer) ");
-		return this.right;
+		return this.left;
 	}
 	/** returns the right side of the complex function - this side might not exists (aka equals null).
 	 * @return a function representing the left side of this complex funcation
@@ -285,7 +325,7 @@ public class ComplexFunction implements complex_function {
 	{
 		if (this.right==null)
 			throw new RuntimeException ("this Complex function have a function which has null pointer) ");
-		return this.left;
+		return this.right;
 	}
 	/**
 	 * The complex_function oparation: plus, mul, div, max, min, comp
@@ -299,7 +339,7 @@ public class ComplexFunction implements complex_function {
 	@Override
 	public double f(double x)
 	{
-	if (this.op==Operation.None)
+	  if (this.op==Operation.None)
 		{
 			return this.left.f(x);
 		}
@@ -335,7 +375,7 @@ public class ComplexFunction implements complex_function {
 	   }
 	else if (this.op==Operation.Error)
 	{
-		throw new RuntimeException ("ERROR (the operation is ERROR , this complex function has an error");
+		throw new RuntimeException ("the operation is ERROR,cant solve this function as x=" +x);
 	}
 	       return 0;
 	  }
@@ -442,16 +482,33 @@ public class ComplexFunction implements complex_function {
 				}
 			}
 		} 
-		else if (obj instanceof Polynom)
+		else if (obj instanceof Polynom || obj instanceof Monom)
 		{
 			Polynom objP=new Polynom (obj.toString());
 			if (!(this.left instanceof ComplexFunction) && !(this.right instanceof ComplexFunction))
 			{
-				Polynom p=new Polynom (this.left.toString());
-				Polynom p1=new Polynom (this.right.toString());
-				p.add(p1);
-				if (p.toString().equals(objP.toString()))
-					return true;
+				  if (this.op.toString().equals("Plus"))
+                  {
+					Polynom p=new Polynom (this.left.toString());
+					Polynom p1=new Polynom (this.right.toString());
+					p.add(p1);
+					if (p.toString().equals(objP.toString()))
+						return true;
+                  }
+                  if (this.op.toString().equals("Times"))
+                  {
+					Polynom p=new Polynom (this.left.toString());
+					Polynom p1=new Polynom (this.right.toString());
+					p.multiply(p1);
+					if (p.toString().equals(objP.toString()))
+						return true;
+                  }
+                  if (this.op.toString().equals("None"))
+                  {
+					Polynom p=new Polynom (this.left.toString());
+					if (p.toString().equals(objP.toString()))
+						return true;
+                  }
 
 			}
 		}
