@@ -1,4 +1,4 @@
-package Ex1;
+package Ex1Testing;
 import static org.junit.Assert.*;
 
 import org.junit.After;
@@ -6,6 +6,8 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import Ex1.Monom;
 
 public class MonomTestJunit {
      double eps =0.00001;

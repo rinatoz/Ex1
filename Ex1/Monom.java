@@ -3,6 +3,11 @@ import java.util.Comparator;
 
 public class Monom implements function
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 0; //check what is it
+
 	public static final Monom ZERO = new Monom(0,0);
 	
 	public static final Monom MINUS1 = new Monom(-1,0);
@@ -227,7 +232,7 @@ public class Monom implements function
 		this._power = p;
 	}
 	
-	public boolean equals (Monom m)
+	private boolean equalsTEMP (Monom m)
 	{
 		if(Math.round(this._coefficient)==0&&Math.round(m._coefficient)==0)
 			return true;
@@ -257,7 +262,50 @@ public class Monom implements function
 	}
 	public boolean equals(Object obj)
 	{
-		return this.equals(obj);
-	}
+		if (obj instanceof Monom)
+		{
+			Monom m=new Monom (obj.toString());
+			return equalsTEMP(m);
+		}
+		else if (obj instanceof Polynom)
+		{
+			if (obj.toString().equals(this.toString()))
+				return true;
+		}
+		else
+		{
+			ComplexFunction comp=new ComplexFunction (obj.toString());
+			if (comp.op.toString().equals("Plus"))
+			{
+			    if (comp.left instanceof Polynom && !(comp.right instanceof ComplexFunction))
+				  {
+				 Polynom p=(Polynom) comp.left;
+			     Polynom p1=(Polynom) comp.right;
+				 p.add(p1);
+				 if(this.toString().equals(p.toString()))
+					     return true;  
+				 }
+				      
+			   }
+			if (comp.op.toString().equals("Times"))
+			{
+			    if (comp.left instanceof Polynom && !(comp.right instanceof ComplexFunction))
+				  {
+				 Polynom p=(Polynom) comp.left;
+			     Polynom p1=(Polynom) comp.right;
+				 p.multiply(p1);
+				 if(this.toString().equals(p.toString()))
+					     return true;  
+				 }
+				      
+			   }
+		   }
+		
+		return false;
+	   }
+		
 	
 }
+
+	
+

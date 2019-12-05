@@ -1,4 +1,4 @@
-package Ex1;
+package Ex1Testing;
 import static org.junit.Assert.*;
 
 import java.util.Iterator;
@@ -8,6 +8,10 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import Ex1.Monom;
+import Ex1.Polynom;
+import Ex1.Polynom_able;
 
 public class PolynomTestJunit {
 
@@ -174,13 +178,11 @@ public class PolynomTestJunit {
  		 assertEquals(p1.toString(), expected.toString());
  		 //5:
  		p1 = new Polynom("x+3");
-		Monom m1 = new Monom("-x");
 		 expected = new Polynom("-x^2-3x");
 		 p1.multiply(p2);
 		 assertEquals(p1.toString(), expected.toString());
 		 //6:
 		 p1 = new Polynom("x^2+5x-2");
-		 m1 = new Monom("-x");
 	    expected = new Polynom("-x^3-5x^2+2x");
 		 p1.multiply(p2);
 		 assertEquals(p1.toString(), expected.toString());
@@ -360,6 +362,7 @@ public class PolynomTestJunit {
 			p1 = new Polynom("2x^-4");
 			p1 = new Polynom("@%");
 			p1 = new Polynom("2x^0.4");
+			p1.copy();
 			}
 			catch(RuntimeException e)
 			{

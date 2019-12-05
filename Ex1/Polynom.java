@@ -2,13 +2,6 @@ package Ex1;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
-import java.util.function.Predicate;
-
-import myMath.Polynom;
-
-
-
-
 
 //import exe0.Polynom;
 
@@ -23,6 +16,10 @@ import myMath.Polynom;
  */
 public class Polynom implements Polynom_able{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4;
 	public ArrayList<Monom> _pol;
 	
 	public Polynom() 
@@ -204,7 +201,6 @@ public class Polynom implements Polynom_able{
 		p._pol.remove(0);
 		int power;
 		double Ncoef=0;
-		int counter=0;
 		
         for (int i=0;i<this._pol.size();i++)
         {
@@ -389,7 +385,7 @@ public class Polynom implements Polynom_able{
 	}
 	
 	
-	public boolean equals(Polynom_able p1)
+	private boolean equalsTemp(Polynom_able p1)
 	{
 		Iterator<Monom> iterator=p1.iteretor();
 		
@@ -410,6 +406,50 @@ public class Polynom implements Polynom_able{
 	    	  return false;
 			
 	      return true;
+	}
+	
+	public boolean equals (Object obj)
+	{
+		if (obj instanceof Polynom)
+		{
+			Polynom p=new Polynom (obj.toString());
+			return equalsTemp(p);
+		}
+		else if (obj instanceof Monom)
+		{
+			if (obj.toString().equals(this.toString()))
+				return true;
+		}
+		else
+		{
+			ComplexFunction comp=new ComplexFunction (obj.toString());
+			if (comp.op.toString().equals("Plus"))
+			{
+			    if (comp.left instanceof Polynom && !(comp.right instanceof ComplexFunction))
+				  {
+				 Polynom p=(Polynom) comp.left;
+			     Polynom p1=(Polynom) comp.right;
+				 p.add(p1);
+				 if(this.toString().equals(p.toString()))
+					     return true;  
+				 }
+				      
+			   }
+			if (comp.op.toString().equals("Times"))
+			{
+			    if (comp.left instanceof Polynom && !(comp.right instanceof ComplexFunction))
+				  {
+				 Polynom p=(Polynom) comp.left;
+			     Polynom p1=(Polynom) comp.right;
+				 p.multiply(p1);
+				 if(this.toString().equals(p.toString()))
+					     return true;  
+				 }
+				      
+			   }
+		   }
+		
+		return false;
 	}
 
 	

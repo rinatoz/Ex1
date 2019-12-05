@@ -1,7 +1,14 @@
 package Ex1Testing;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.junit.Assert.*;
+
+import java.util.Iterator;
+
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 import Ex1.ComplexFunction;
 import Ex1.Functions_GUI;
@@ -31,11 +38,11 @@ class Functions_GUITest {
 		data.drawFunctions(w,h,rx,ry,res);
 	}
 	private Functions_GUI _data=null;
-//	@BeforeAll
-//	static void setUpBeforeClass() throws Exception {
-//	}
+	@Before
+	static void setUpBeforeClass() throws Exception {
+	}
 
-	@BeforeEach
+	@Before
 	void setUp() throws Exception {
 		_data = FunctionsFactory();
 	}
@@ -63,7 +70,7 @@ class Functions_GUITest {
 
 	@Test
 	void testDrawFunctionsIntIntRangeRangeInt() {
-		_data.drawFunctions();
+		//_data.drawFunctions();
 		//fail("Not yet implemented");
 	}
 	public static Functions_GUI FunctionsFactory() {
