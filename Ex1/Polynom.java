@@ -19,7 +19,9 @@ public class Polynom implements Polynom_able{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 4;
+	/**
+	 * 
+	 */
 	public ArrayList<Monom> _pol;
 	
 	public Polynom() 

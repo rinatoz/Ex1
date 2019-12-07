@@ -3,8 +3,6 @@ package Ex1;
 
 public class ComplexFunction implements complex_function {
 
-	private static final long serialVersionUID = 0;
-
 	function right;
      public function left;
      Operation op;

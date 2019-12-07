@@ -6,7 +6,11 @@ public class Monom implements function
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 0; //check what is it
+
+
+	/**
+	 * 
+	 */
 
 	public static final Monom ZERO = new Monom(0,0);
 	
