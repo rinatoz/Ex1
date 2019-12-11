@@ -4,7 +4,7 @@ package Ex1;
 public class ComplexFunction implements complex_function {
 
 	function right;
-     public function left;
+    function left;
      Operation op;
      
      public ComplexFunction ()
@@ -48,6 +48,8 @@ public class ComplexFunction implements complex_function {
      
      public ComplexFunction (String s)
      {
+    	 try
+    	 {
     	 boolean flag=false;
     	try
     	{
@@ -107,12 +109,12 @@ public class ComplexFunction implements complex_function {
  	 		  throw new RuntimeException ("uncorrect pattern into string"); 
  	 	   }
  	   	 
-			s = s.substring(1, s.length()-1);
+			s = s.substring(1, s.length()-1); //the rest of the string
 			int spaces = countspace(s);
-			if(spaces==0)         
+			if(spaces==0)       //error  
 			throw new RuntimeException("uncorrect pattern,miss ','");
 			int i = retIndex(s);
-			if(spaces==1) 
+			if(spaces==1) //stop condition of the recourstion.
 			{  				
 				this.left = new Polynom(s.substring(0, i));
 				this.right = new Polynom(s.substring(i+1, s.length()));
@@ -122,25 +124,29 @@ public class ComplexFunction implements complex_function {
 			else
 			{
 				try {
-					this.left = new Polynom(s.substring(0, i));
+					this.left = new Polynom(s.substring(0, i)); //if the left side until the ',' is a polynom String.
 				    } 
 				catch (Exception e) 
 				{
-					this.left = new ComplexFunction(s.substring(0, i));
+					this.left = new ComplexFunction(s.substring(0, i)); ////if the left side until the ',' is a ComplexFunction String.
 				}
 				try
 				{
-					this.right = new Polynom(s.substring(i+1, s.length()));
+					this.right = new Polynom(s.substring(i+1, s.length())); ////if the right side until the ')' is a polynom String.
 				} 
 				catch (Exception e) 
 				{
-					this.right = new ComplexFunction(s.substring(i+1, s.length()));
+					this.right = new ComplexFunction(s.substring(i+1, s.length())); ///////if the right side until the ')' is a ComplexFunction String.
 				}
 			}
 			
-			if ((!(this.right.toString().equals("0.0")))&&this.op.toString().equals("None"))
+			if ((!(this.right.toString().equals("0.0")))&&this.op.toString().equals("None")) //error check
 				throw new RuntimeException ("complex function can't accept 2 functions with none operation");
-
+    	 }
+    	 catch (Exception e)
+    	 {
+    		 throw new RuntimeException ("ERROR! check the string and fix problems");
+    	 }
      }
  
      public String toString()
@@ -358,7 +364,7 @@ public class ComplexFunction implements complex_function {
 	    {
 		  if (this.right.f(x)==0)
 		  {
-			throw new RuntimeException ("ERROR!!!!!! impossible to divid with zero");
+			throw new RuntimeException ("ERROR! impossible to divid with zero");
 		  }
 	      else
 			return this.left.f(x)/this.right.f(x);
@@ -412,6 +418,7 @@ public class ComplexFunction implements complex_function {
 				s = s.substring(1);
 				final_++;
 			}
+
 		}
 		else {
 			while(s.charAt(0)!=',') {

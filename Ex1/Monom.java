@@ -303,6 +303,15 @@ public class Monom implements function
 				 }
 				      
 			   }
+			if (comp.op.toString().equals("None"))
+			{
+			    if (comp.left instanceof Polynom)
+				  {
+				 if(this.toString().equals(comp.left.toString()))
+					     return true;  
+				 }
+				      
+			   }
 		   }
 		
 		return false;
